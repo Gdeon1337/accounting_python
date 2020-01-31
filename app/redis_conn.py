@@ -1,8 +1,7 @@
 import asyncio
+from typing import List, Set
 
 import aioredis
-import re
-from typing import List, Set
 from sanic import Sanic
 from sanic.exceptions import ServerError
 

@@ -1,5 +1,6 @@
 import re
 from typing import Dict, List, Set
+
 from ..extensions import conn
 
 
@@ -26,4 +27,3 @@ async def create_domains(domains: List, timestamp: int) -> Dict:
 async def get_list_domains(datetime_start: int, datetime_end: int) -> Set:
     domains = await conn.zrevrange_by_lex(datetime_start, datetime_end)
     return {re_ref_domain.sub('', domain.decode()) for domain in domains}
-

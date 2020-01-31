@@ -1,5 +1,6 @@
-from .redis_conn import RedisConn
 from sanic import Sanic
+
+from .redis_conn import RedisConn
 
 
 conn = RedisConn()
