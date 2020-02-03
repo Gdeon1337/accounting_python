@@ -4,7 +4,6 @@ from typing import List, Set
 import aioredis
 from aioredis.errors import ConnectionClosedError
 from sanic import Sanic
-from sanic.exceptions import ServerError
 
 
 class RedisConn:

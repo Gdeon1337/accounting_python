@@ -5,7 +5,6 @@ from sanic.request import Request
 from sanic.response import json
 
 from app.helpers import redis_loaders
-# from sanic_openapi import doc  # pylint: disable=wrong-import-order
 from app.helpers.validators import raise_if_empty, raise_if_not_int
 
 
