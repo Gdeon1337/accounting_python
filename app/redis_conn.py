@@ -4,15 +4,20 @@ from typing import List, Set
 import aioredis
 from aioredis.errors import ConnectionClosedError
 from sanic import Sanic
+from tenacity import retry, stop_after_attempt, wait_random
 
 
 class RedisConn:
     conn = None
     redis_connection = None
 
-    async def create_redis_connection(self, app: Sanic, loop: asyncio.AbstractEventLoop):
+    @retry(reraise=True, stop=stop_after_attempt(3), wait=wait_random(min=3, max=10))
+    async def connect(self):
+        self.conn = await aioredis.create_redis(self.redis_connection)
+
+    async def create_redis_connection(self, app: Sanic, _):
         self.redis_connection = app.config.REDIS_CONNECTION
-        self.conn = await aioredis.create_redis(self.redis_connection, loop=loop)
+        await self.connect()
 
     async def close_redis_connection(self, *args):
         if self.conn:
@@ -34,7 +39,13 @@ class RedisConn:
         )
 
     async def ping(self):
+        if not self.conn:
+            await self.connect()
         try:
             await self.conn.ping()
         except ConnectionClosedError:
+            self.conn = None
             raise ConnectionClosedError("Redis conn disconnected")
+        except AttributeError:
+            raise ConnectionClosedError("Redis conn is None")
+

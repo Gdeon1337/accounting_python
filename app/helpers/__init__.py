@@ -1,4 +1,4 @@
-from . import redis_loaders, swagger, validators
+from . import redis_loaders, validators
 
 
-__all__ = ['redis_loaders', 'swagger', 'validators',]
+__all__ = ['redis_loaders', 'validators']
