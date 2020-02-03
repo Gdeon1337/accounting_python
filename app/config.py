@@ -10,8 +10,8 @@ project_root = os.path.abspath(os.path.join(app_dir, os.pardir))
 pyproject_info = toml.load(os.path.join(project_root, 'pyproject.toml'))
 poetry_info = pyproject_info['tool']['poetry']
 
-app_name = poetry_info['app'].lower()
-service_name = f'{app_name}.{poetry_info["name"]}'
+app_name = poetry_info["name"].lower()
+service_name = f'{app_name}'
 
 default_ip = 'localhost'
 

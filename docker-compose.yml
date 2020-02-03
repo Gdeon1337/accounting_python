@@ -3,14 +3,10 @@ version: '2.3'
 services:
     api:
         build: .
-        image: registry.gitlab.com/sandlabs/forks/backend:develop
         restart: unless-stopped
         ports: 
             - 7474:7474
         environment:
-            PG_CONNECTION: postgresql://forks:6ccf8b29-f2ef-4ffa-aa4b-712b3771998f@forks.sandlabs.ru:5432/forks
             REDIS_CONNECTION: redis://:29e282d2-ee7d-4596-8c9d-40ec826d1890@forks.sandlabs.ru:6379/0
-            SENTRY_DSN: https://c404a7b7b9a743bcb5b02aac9075bf4b@sentry.io/1729326
-            RABBITMQ_AMQP: amqp://forks:b016383e-2bfa-416e-b9f2-47f8b6a00421@forks.sandlabs.ru:5672/
             SERVER_IP: 0.0.0.0
             SERVER_PORT: 7474

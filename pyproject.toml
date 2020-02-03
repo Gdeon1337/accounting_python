@@ -1,5 +1,4 @@
 [tool.poetry]
-app = "accounting"
 name = "accounting_python"
 version = "1.0.0"
 description = "Test by funbox"
@@ -8,7 +7,6 @@ authors = ["r.zabbarov <gdeon1337@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 dataclasses = {version = "^0.6",python = "<3.7"}
-#sanic-openapi = {git = "https://github.com/SandLabs/sanic-openapi.git",branch = "master"}
 six = "^1.13"
 toml = "^0.10.0"
 ddtrace = "^0.30"
