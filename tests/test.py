@@ -57,14 +57,7 @@ async def test_get_domains(test_cli):
 
 
 async def test_fail_get_domains(test_cli):
-    domains = [
-        'funbox.ru',
-        'vk.com',
-        'mail.ru',
-        'google.ru'
-    ]
     timestamp = int(datetime.now().timestamp())
-    await create_domains(domains, timestamp)
     domain = await test_cli.get('/domains', params={
         'to': timestamp
     })
