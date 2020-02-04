@@ -1,4 +1,3 @@
-import asyncio
 from typing import List, Set
 
 import aioredis
@@ -49,4 +48,3 @@ class RedisConn:
             raise ConnectionClosedError("Redis conn disconnected")
         except AttributeError:
             raise ConnectionClosedError("Redis conn is None")
-

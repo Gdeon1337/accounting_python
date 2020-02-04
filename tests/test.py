@@ -1,19 +1,22 @@
-from app import create_app
-from datetime import datetime
-from .utils import create_domains
 import json
+from datetime import datetime
+
 import pytest
+
+from app import create_app
+
+from .utils import create_domains
 
 
 @pytest.yield_fixture(scope='module', autouse=True)
 def app():
-    app = create_app()
-    yield app
+    app_ = create_app()
+    yield app_
 
 
 @pytest.fixture(autouse=True)
-def test_cli(loop, app, sanic_client):
-    return loop.run_until_complete(sanic_client(app))
+def test_cli(loop, app_, sanic_client):
+    return loop.run_until_complete(sanic_client(app_))
 
 
 async def test_create_domain(test_cli):
@@ -71,4 +74,3 @@ async def test_fail_get_domains(test_cli):
     domain = await test_cli.get('/domains', params={
     })
     assert domain.status == 400
-
