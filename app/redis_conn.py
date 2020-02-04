@@ -11,7 +11,7 @@ class RedisConn:
     conn = None
     redis_connection = None
 
-    @retry(reraise=True, stop=stop_after_attempt(3), wait=wait_random(min=3, max=10))
+    @retry(reraise=True, stop=stop_after_attempt(3), wait=wait_random(min=1, max=3))
     async def connect(self):
         self.conn = await aioredis.create_redis(self.redis_connection)
 
@@ -38,6 +38,7 @@ class RedisConn:
             max=f'{datetime_end+1}'.encode('utf-8')
         )
 
+    @retry(reraise=True, stop=stop_after_attempt(3))
     async def ping(self):
         if not self.conn:
             await self.connect()

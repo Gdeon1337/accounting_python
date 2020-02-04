@@ -19,7 +19,6 @@ default_ip = 'localhost'
 class Config(EnvConfig):
     SERVER_IP: str = default_ip
     SERVER_PORT: int = 80
-    APP_URL_PREFIX: str = '/api'
     REDIS_CONNECTION: str = 'redis://localhost:6379/1'
 
     APP_DIR: str = app_dir

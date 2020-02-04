@@ -1,21 +1,21 @@
 import re
 from typing import Dict, List, Set
 
-from ..extensions import conn
+from app.extensions import conn
 
 
 re_domain = re.compile(r'([a-zA-Z0-9]([a-zA-Z0-9\-]{0,65}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}')
 re_ref_domain = re.compile(r'^\d*\:')
 
 
-def get_domain(domain):
+def get_domain(domain: str):
     result = re_domain.search(domain)
     if result:
         return result.group(0)
     return
 
 
-def validator_domains(domains):
+def validator_domains(domains: List):
     return [get_domain(domain) for domain in domains if get_domain(domain)]
 
 
