@@ -9,14 +9,14 @@ blueprint_exceptions = Blueprint('except', url_prefix='/', strict_slashes=True)
 
 
 @blueprint_exceptions.exception(InvalidUsage)
-def except_invalid_usage(requests: Request, exceptions):
+def except_invalid_usage(requests: Request, exceptions):  # pylint: disable=unused-argument
     return json({
         'status': str(exceptions)
     }, status=400)
 
 
 @blueprint_exceptions.exception(ConnectionClosedError)
-def except_connect_error(requests: Request, exceptions):
+def except_connect_error(requests: Request, exceptions):  # pylint: disable=unused-argument
     return json({
         'status': str(exceptions)
     }, status=500)

@@ -21,7 +21,7 @@ class RedisConn:
         self.redis_connection = app.config.REDIS_CONNECTION
         await self.connect()
 
-    async def close_redis_connection(self, *args):
+    async def close_redis_connection(self, *args):  # pylint: disable=unused-argument
         if self.conn:
             self.conn.close()
             await self.conn.wait_closed()
@@ -29,7 +29,8 @@ class RedisConn:
     async def zadd(self, domains: List, timestamp: int):
         await self.ping()
         pipe = self.conn.pipeline()
-        [pipe.zadd('urls', 0, f'{timestamp}:{domain}') for domain in domains]
+        for domain in domains:
+            pipe.zadd('urls', 0, f'{timestamp}:{domain}')
         await pipe.execute()
 
     async def zrevrange_by_lex(self, datetime_start: int, datetime_end: int) -> Set:

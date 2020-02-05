@@ -12,7 +12,7 @@ def get_domain(domain: str):
     result = re_domain.search(domain)
     if result:
         return result.group(0)
-    return
+    return None
 
 
 def validator_domains(domains: List):
