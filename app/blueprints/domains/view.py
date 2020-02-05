@@ -15,8 +15,8 @@ blueprint = Blueprint('domains', url_prefix='/', strict_slashes=True)
 async def domain(request: Request):
     links = request.json.get('links')
     raise_if_empty(links)
-    response = await redis_loaders.create_domains(links, int(datetime.now().timestamp()))
-    return json(response)
+    await redis_loaders.create_domains(links, int(datetime.now().timestamp()))
+    return json({'status': 'ok'})
 
 
 @blueprint.get('/visited_domains')

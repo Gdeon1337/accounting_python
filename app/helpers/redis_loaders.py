@@ -19,9 +19,8 @@ def validator_domains(domains: List):
     return [get_domain(domain) for domain in domains if get_domain(domain)]
 
 
-async def create_domains(domains: List, timestamp: int) -> Dict:
+async def create_domains(domains: List, timestamp: int):
     await conn.zadd(validator_domains(domains), timestamp)
-    return {'status': 'ok'}
 
 
 async def get_list_domains(datetime_start: int, datetime_end: int) -> Set:
