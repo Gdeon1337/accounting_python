@@ -12,10 +12,7 @@ class RedisConn:
 
     @retry(reraise=True, stop=stop_after_attempt(3), wait=wait_random(min=1, max=3))
     async def connect(self):
-        try:
-            self.conn = await aioredis.create_redis(self.redis_connection)
-        except ConnectionRefusedError:
-            ConnectionClosedError('Redis conn disconnected')
+        self.conn = await aioredis.create_redis(self.redis_connection)
 
     async def create_redis_connection(self, app: Sanic, _):
         self.redis_connection = app.config.REDIS_CONNECTION
@@ -47,8 +44,6 @@ class RedisConn:
             await self.connect()
         try:
             await self.conn.ping()
-        except ConnectionClosedError:
+        except ConnectionClosedError or AttributeError:
             self.conn = None
             raise ConnectionClosedError("Redis conn disconnected")
-        except AttributeError:
-            raise ConnectionClosedError("Redis conn is None")
