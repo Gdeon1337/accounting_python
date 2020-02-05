@@ -8,10 +8,10 @@ from app.helpers import redis_loaders
 from app.helpers.validators import raise_if_empty, raise_if_not_int
 
 
-blueprint = Blueprint('domains', url_prefix='/domains', strict_slashes=True)
+blueprint = Blueprint('domains', url_prefix='/', strict_slashes=True)
 
 
-@blueprint.post('')
+@blueprint.post('/visited_links')
 async def domain(request: Request):
     links = request.json.get('links')
     raise_if_empty(links)
@@ -19,7 +19,7 @@ async def domain(request: Request):
     return json(response)
 
 
-@blueprint.get('')
+@blueprint.get('/visited_domains')
 async def get_currency(request: Request):
     date_time_start = request.args.get('from')
     date_time_end = request.args.get('to')

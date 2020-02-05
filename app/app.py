@@ -1,7 +1,7 @@
 from sanic import Sanic
 
 from . import config
-from .blueprints import blueprint
+from .blueprints import blueprint, blueprint_exceptions
 
 
 def create_app(config_object: object = config.Config) -> Sanic:
@@ -19,3 +19,4 @@ def register_extensions(app: Sanic):
 
 def register_blueprints(app: Sanic):
     app.blueprint(blueprint)
+    app.blueprint(blueprint_exceptions)

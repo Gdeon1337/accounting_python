@@ -15,8 +15,8 @@ def app():
 
 
 @pytest.fixture(autouse=True)
-def test_cli(loop, app_, sanic_client):
-    return loop.run_until_complete(sanic_client(app_))
+def test_cli(loop, app, sanic_client):
+    return loop.run_until_complete(sanic_client(app))
 
 
 async def test_create_domain(test_cli):
@@ -28,7 +28,7 @@ async def test_create_domain(test_cli):
             'google.ru'
         ]
     }
-    domain = await test_cli.post('/domains', data=json.dumps(data))
+    domain = await test_cli.post('/visited_links', data=json.dumps(data))
     assert domain.status == 200
     data_response = {
         'status': 'ok'
@@ -37,7 +37,7 @@ async def test_create_domain(test_cli):
 
 
 async def test_fail_create_domain(test_cli):
-    domain = await test_cli.post('/domains', data=json.dumps({}))
+    domain = await test_cli.post('/visited_links', data=json.dumps({}))
     assert domain.status == 400
 
 
@@ -50,7 +50,7 @@ async def test_get_domains(test_cli):
     ]
     timestamp = int(datetime.now().timestamp())
     await create_domains(domains, timestamp)
-    domain = await test_cli.get('/domains', params={
+    domain = await test_cli.get('/visited_domains', params={
         'from': timestamp,
         'to': timestamp
     })
@@ -61,16 +61,16 @@ async def test_get_domains(test_cli):
 
 async def test_fail_get_domains(test_cli):
     timestamp = int(datetime.now().timestamp())
-    domain = await test_cli.get('/domains', params={
+    domain = await test_cli.get('/visited_domains', params={
         'to': timestamp
     })
     assert domain.status == 400
 
-    domain = await test_cli.get('/domains', params={
+    domain = await test_cli.get('/visited_domains', params={
         'from': timestamp
     })
     assert domain.status == 400
 
-    domain = await test_cli.get('/domains', params={
+    domain = await test_cli.get('/visited_domains', params={
     })
     assert domain.status == 400
