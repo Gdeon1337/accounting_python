@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "accounting_python"
 version = "1.0.0"
-description = "Test by funbox"
+description = "Test"
 authors = ["r.zabbarov <gdeon1337@gmail.com>"]
 
 [tool.poetry.dependencies]
